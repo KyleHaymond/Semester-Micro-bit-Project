@@ -64,10 +64,10 @@ basic.forever(function () {
     let time = (input.runningTime() / 1000)
     let adjustedTime = Math.round(time * 10) / 10
 
-    // GET RAW VOLT READING AND ADJUST FOR DECIMAL
+    // GET RAW VOLT READING
     let rawValue = readVoltage()
 
-    // CONVERT VOLT READINGS TO PPM AND GET AN AVG OF READINGS TO TRY TO ELIMINATE NOISE
+    // CONVERT VOLT READINGS TO PPM AND GET AN AVG OF READINGS TO ELIMINATE NOISE
     let ppmSum = 0
     for (let i = 0; i < 10; i++) {
 
@@ -81,11 +81,11 @@ basic.forever(function () {
     // ROUND RAW VALUE FOR PRINTING
     rawValue = Math.round(rawValue * 100) / 100
 
-    // WRITE TO CVS FILE AND DISPLAY ON LED'S
-    serial.writeLine("" + adjustedTime + "," + rawValue + "," + ppm) // + "," + temp + "," + hum)
+    // WRITE TO CVS FILE
+    serial.writeLine("" + adjustedTime + "," + rawValue + "," + ppm)
     basic.pause(1000)
 
-    // PLAY A NOTE BASED ON VOLTAGE RETURN
+    // PLAY A TUNE BASED ON PPM RETURN
     if (ppm >= 10) {
         music.stopAllSounds()
         music.play(music.stringPlayable("C D C D C D C D ", 400), music.PlaybackMode.LoopingInBackground)
